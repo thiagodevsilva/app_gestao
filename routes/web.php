@@ -18,9 +18,10 @@ use App\Http\Controllers\QuemSomosController;
 
 Route::get('/', [IndexController::class, 'index'])->name('site.index');
 
-Route::get('/contato', [ContatoController::class, 'contato']);
+Route::get('/contato', [ContatoController::class, 'contato'])->name('site.contato');
+Route::post('/contato', [ContatoController::class, 'contato'])->name('site.contato');
 
-Route::get('/quem-somos', [QuemSomosController::class, 'quemSomos']);
+Route::get('/quem-somos', [QuemSomosController::class, 'quemSomos'])->name('site.quemsomos');
 
 Route::prefix('/app')->group( function() {
     Route::get('/clientes', function() {
