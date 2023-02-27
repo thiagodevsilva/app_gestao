@@ -13,12 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('fornecedores', function (Blueprint $table) {
-            $table->id();
-            $table->string('nome', 50);
-            $table->timestamps();
-            //$table->softDeletes();
-        });
+        DB::statement('ALTER TABLE site_contatos CHANGE `motivo-contato` motivo_contato INT NOT NULL');
     }
 
     /**
@@ -28,6 +23,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fornecedores');
+        DB::statement('ALTER TABLE site_contatos CHANGE `motivo_contato` `motivo-contato` INT NOT NULL');
     }
+
 };
