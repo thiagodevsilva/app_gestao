@@ -10,7 +10,7 @@
 
         <div class="informacao-pagina">
             <div class="contato-principal">
-                @component('site.layouts._components.form-contato', ['classe' => 'borda-preta'])
+                @component('site.layouts._components.form-contato', ['classe' => 'borda-preta', 'motivos_contato' => $motivos_contato])
                 <p>Agradecemos o contato, o caso está sob responsabilidade de nossos analistas.</p>
                 <p>Nosso retorno pode ocorrer em até 5 dias úteis.</p>                    
                 @endcomponent

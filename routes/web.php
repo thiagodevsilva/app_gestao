@@ -19,7 +19,7 @@ use App\Http\Controllers\QuemSomosController;
 Route::get('/', [IndexController::class, 'index'])->name('site.index');
 
 Route::get('/contato', [ContatoController::class, 'contato'])->name('site.contato');
-Route::post('/contato', [ContatoController::class, 'contato'])->name('site.contato');
+Route::post('/contato', [ContatoController::class, 'salvar'])->name('site.contato');
 
 Route::get('/quem-somos', [QuemSomosController::class, 'quemSomos'])->name('site.quemsomos');
 
