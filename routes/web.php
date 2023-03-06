@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\QuemSomosController;
+use App\Http\Middleware\LogAcessoMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,9 @@ use App\Http\Controllers\QuemSomosController;
 |
 */
 
-Route::get('/', [IndexController::class, 'index'])->name('site.index');
+Route::middleware(LogAcessoMiddleware::class)
+    ->get('/', [IndexController::class, 'index'])
+    ->name('site.index');
 
 Route::get('/contato', [ContatoController::class, 'contato'])->name('site.contato');
 Route::post('/contato', [ContatoController::class, 'salvar'])->name('site.contato');
