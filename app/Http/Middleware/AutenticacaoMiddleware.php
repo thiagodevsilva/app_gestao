@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use App\Models\LogAcesso;
 
-class LogAcessoMiddleware
+class AutenticacaoMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,14 +16,12 @@ class LogAcessoMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        // return $next($request);
-        // dd($request);
+        session_start();
 
-        $ip = $request->server->get('REMOTE_ADDR');
-        $rota = $request->getRequestUri();
-
-        LogAcesso::create(['log' => "IP $ip acessou a rota $rota"]);
-        // return Response('Chegamos no middlware! Finalizamos no middleware.');
-        return $next($request);
+        if (isset($_SESSION['email']) && $_SESSION['email'] != '') {
+            return $next($request);
+        } else {
+            return redirect()->route('site.login', ['erro' => 2]);
+        }
     }
 }
