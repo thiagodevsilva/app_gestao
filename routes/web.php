@@ -37,7 +37,15 @@ Route::prefix('/app')->middleware('autenticacao')->group( function() {
     Route::get('/sair', [LoginController::class, 'sair'])->name('app.sair');
     Route::get('/cliente', [ClienteController::class, 'index'])->name('app.cliente');
 
-    Route::resource('produto', ProdutoController::class);
+    Route::resource('produto', ProdutoController::class)->names([
+        'index' => 'app.produto.index',
+        'create' => 'app.produto.create',
+        'store' => 'app.produto.store',
+        'show' => 'app.produto.show',
+        'edit' => 'app.produto.edit',
+        'update' => 'app.produto.update',
+        'destroy' => 'app.produto.destroy'
+    ]);
 
     Route::get('/fornecedor', [FornecedorController::class, 'index'])->name('app.fornecedor');
     Route::post('/fornecedor/listar', [FornecedorController::class, 'listar'])->name('app.fornecedor.listar');
