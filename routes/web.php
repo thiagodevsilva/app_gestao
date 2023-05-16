@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\ProdutoDetalheController;
 use App\Http\Middleware\LogAcessoMiddleware;
 
 /*
@@ -46,6 +47,17 @@ Route::prefix('/app')->middleware('autenticacao')->group( function() {
         'update' => 'app.produto.update',
         'destroy' => 'app.produto.destroy'
     ]);
+
+    Route::resource('produto-detalhe', ProdutoDetalheController::class)->names([
+        'index' => 'app.produto_detalhe.index',
+        'create' => 'app.produto_detalhe.create',
+        'store' => 'app.produto_detalhe.store',
+        'show' => 'app.produto_detalhe.show',
+        'edit' => 'app.produto_detalhe.edit',
+        'update' => 'app.produto_detalhe.update',
+        'destroy' => 'app.produto_detalhe.destroy'
+    ]);
+
 
     Route::get('/fornecedor', [FornecedorController::class, 'index'])->name('app.fornecedor');
     Route::post('/fornecedor/listar', [FornecedorController::class, 'listar'])->name('app.fornecedor.listar');

@@ -16,6 +16,7 @@
     </div>
     <div class="informacao-pagina">
         <div style="width: 90%; margin: 0 auto;">
+            {{ $produtos->toJson() }}
             <table border="1" width="100%">
                 <thead>
                     <tr>
@@ -23,6 +24,9 @@
                         <th>Descrição</th>
                         <th>Peso</th>
                         <th>Unidade ID</th>
+                        <th>Comprimento</th>
+                        <th>Largura</th>
+                        <th>Altura</th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -35,6 +39,9 @@
                             <td>{{ $produto->descricao }}</td>
                             <td>{{ $produto->peso }}</td>
                             <td>{{ $produto->unidade_id }}</td>
+                            <td>{{ $produto->produtoDetalhe->comprimento ?? '' }}</td>
+                            <td>{{ $produto->produtoDetalhe->largura ?? '' }}</td>
+                            <td>{{ $produto->produtoDetalhe->altura ?? '' }}</td>
                             <td><a href="{{ route('app.produto.show', ['produto' => $produto->id]) }}">Visualizar</a></td>
                             <td>
                                 <form id="form_{{$produto->id}}" method="post" action="{{ route('app.produto.destroy', ['produto' => $produto->id]) }}">
