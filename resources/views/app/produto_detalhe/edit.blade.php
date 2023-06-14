@@ -18,7 +18,6 @@
         
     </pre>
     <div class="informacao-pagina">
-
         <h4>Produto</h4>
         <div>
             <label>Nome: </label>
