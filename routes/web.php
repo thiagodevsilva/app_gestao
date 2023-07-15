@@ -7,6 +7,8 @@ use App\Http\Controllers\QuemSomosController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\PedidoProdutoController;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\ProdutoDetalheController;
@@ -36,7 +38,7 @@ Route::get('/quem-somos', [QuemSomosController::class, 'quemSomos'])->name('site
 Route::prefix('/app')->middleware('autenticacao')->group( function() {
     Route::get('/home', [HomeController::class, 'index'])->name('app.home');
     Route::get('/sair', [LoginController::class, 'sair'])->name('app.sair');
-    Route::get('/cliente', [ClienteController::class, 'index'])->name('app.cliente');
+    // Route::get('/cliente', [ClienteController::class, 'index'])->name('app.cliente');
 
     Route::resource('produto', ProdutoController::class)->names([
         'index' => 'app.produto.index',
@@ -58,6 +60,11 @@ Route::prefix('/app')->middleware('autenticacao')->group( function() {
         'destroy' => 'app.produto_detalhe.destroy'
     ]);
 
+    Route::resource('cliente', ClienteController::class);
+    Route::resource('pedido', PedidoController::class);
+    // Route::resource('pedido-produto', PedidoProdutoController::class);
+    Route::get('pedido-produto/create/{pedido}', [PedidoProdutoController::class, 'create'])->name('app.pedido-produto.create');
+    Route::post('pedido-produto/store/{pedido}', [PedidoProdutoController::class, 'store'])->name('app.pedido-produto.store');
 
     Route::get('/fornecedor', [FornecedorController::class, 'index'])->name('app.fornecedor');
     Route::post('/fornecedor/listar', [FornecedorController::class, 'listar'])->name('app.fornecedor.listar');
