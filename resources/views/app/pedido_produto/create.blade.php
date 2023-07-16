@@ -11,7 +11,7 @@
     </div>
     <div class="menu">
         <ul>
-            <li><a href="#">Voltar</a></li>
+            <li><a href="{{ route('pedido.index') }}">Voltar</a></li>
             <li><a href="">Consulta</a></li>
         </ul>
     </div>
@@ -27,6 +27,9 @@
                     <tr>
                         <th>ID</th>
                         <th>Nome do produto</th>
+                        <th>Adicionado em</th>
+                        <th>Quantidade</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,6 +37,15 @@
                     <tr>
                         <td>{{ $produto->id }}</td>
                         <td>{{ $produto->nome }}</td>
+                        <td>{{ $produto->pivot->created_at->format('d/m/Y') }}</td>
+                        <td>{{ $produto->pivot->quantidade }}</td>
+                        <td>
+                            <form id="form_{{ $produto->pivot->id }}" method="post" action="{{ route('app.pedido-produto.destroy', ['pedidoProduto' => $produto->pivot->id, 'pedido_id' => $pedido->id])}}">
+                                @method('DELETE')
+                                @csrf
+                                <a href="#" onclick="document.getElementById('form_{{ $produto->pivot->id }}').submit()">Excluir</a>
+                            </form>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

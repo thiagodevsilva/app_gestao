@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pedido;
 use App\Models\PedidoProduto;
 use App\Models\Produto;
+use App\Models\Item;
 
 class PedidoProdutoController extends Controller
 {
@@ -40,19 +41,26 @@ class PedidoProdutoController extends Controller
     public function store(Request $request, Pedido $pedido)
     {
         $regras = [
-            'produto_id' => 'exists:produtos,id'
+            'produto_id' => 'exists:produtos,id',
+            'quantidade' => 'required'
         ];
 
         $feedback =[
-            'produto_id.exists' => 'O produto informado não existe'
+            'produto_id.exists' => 'O produto informado não existe',
+            'required' => 'O campo :attribute deve possuir um valor válido'
         ];
 
         $request->validate($regras, $feedback);
 
-        $pedidoProduto = new PedidoProduto();
-        $pedidoProduto->pedido_id = $pedido->id;
-        $pedidoProduto->produto_id = $request->get('produto_id');
-        $pedidoProduto->save();
+        // $pedidoProduto = new PedidoProduto();
+        // $pedidoProduto->pedido_id = $pedido->id;
+        // $pedidoProduto->produto_id = $request->get('produto_id');
+        // $pedidoProduto->quantidade = $request->get('quantidade');
+        // $pedidoProduto->save();
+
+        $pedido->produtos()->attach([
+            $request->get('produto_id') => ['quantidade' => $request->get('quantidade')]
+        ]);
 
         return redirect()->route('app.pedido-produto.create', ['pedido' => $pedido->id]);
     }
@@ -94,11 +102,12 @@ class PedidoProdutoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param $pedidoProduto
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(pedidoProduto $pedidoProduto, $pedido_id)
     {
-        //
+        $pedidoProduto->delete();
+        return redirect()->route('app.pedido-produto.create', ['pedido' => $pedido_id]);
     }
 }
